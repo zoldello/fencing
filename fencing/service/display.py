@@ -9,13 +9,13 @@ class Display:
     def print_info(self, message):
         """Informational. Display if isQuiet is false."""
         if not self.isQuiet:
-            print 'Info: ' + message + '\n'
+            print ''.join(['Info', message])
 
     def print_warning(self, message):
         """Warning. Diplay is isQuiet is false."""
         if not self.isQuiet:
-            print 'Warning: '  + message + '\n'
+            print ''.join(['Warning: ',  message])
 
     def print_error(self, message):
         """Error. Always displays."""
-        print 'Error: '  + message + '\n'
+        print ''.join(['Error: ',  message])

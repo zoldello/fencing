@@ -40,4 +40,12 @@ class DataReader:
             for row in reader:
                 csvFileContent.append(row)
 
+        csvFileContentLength = len(csvFileContent)
+
+        if not (csvFileContentLength >= 12 and csvFileContentLength < 100):
+            self.display.print_error('The number of fencers is not with in the range of 12 and 100 (100 is inclusive.). The range you have is: {0}'.format(csvFileContentLength))
+            return None
+
+        self.display.print_info('Number of fencers: {0}'.format(csvFileContentLength))
+
         return csvFileContent
