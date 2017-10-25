@@ -58,3 +58,5 @@ if __name__ == '__main__':
 
     poolService = PoolService(fencersModel)
     pools = poolService.getPools()
+
+    display.print_pools_to_screen(pools)

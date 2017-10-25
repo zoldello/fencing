@@ -19,7 +19,7 @@ class Fencer:
     @property
     def firstName(self):
         """First name."""
-        return self._firsName
+        return self._firstName
 
     @property
     def club(self):
