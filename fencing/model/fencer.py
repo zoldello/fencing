@@ -1,25 +1,28 @@
 """class for fencer model."""
+import uuid
+
 class Fencer:
     """Fencer."""
 
     def __init__(self, fencer):
         """Initialize."""
-        self._lastName = fencer[0] or ""
-        self._firstName = fencer[1] or ""
-        self._club = fencer[2] or ""
-        self._skillLevel = fencer[3] or ""
+        self._faux_for_clubless = ''.join(['Club_', str(uuid.uuid4())])
+        self._last_name = (fencer[0] or "").strip()
+        self._first_name = (fencer[1] or "").strip()
+        self._club = (fencer[2] or self._faux_for_clubless).strip()
+        self._skill_level = (fencer[3] or "").strip()
 
-        self._numericSkillLevel = self._getNumericSkill()
+        self._numeric_skill_level = self._get_numeric_skill()
 
     @property
-    def lastName(self):
+    def last_name(self):
         """Last name."""
-        return self._lastName
+        return self._last_name
 
     @property
-    def firstName(self):
+    def first_name(self):
         """First name."""
-        return self._firstName
+        return self._first_name
 
     @property
     def club(self):
@@ -27,26 +30,25 @@ class Fencer:
         return self._club
 
     @property
-    def skillLevel(self):
+    def skill_level(self):
         """Skill level."""
-        return self._skillLevel
+        return self._skill_level
 
     @property
-    def numericSkillLevel(self):
+    def numeric_skill_level(self):
         """Numeric Skill level."""
-        return self._numericSkillLevel
+        return self._numeric_skill_level
 
-    def _getNumericSkill(self):
-        """This is a util that converts the skills to a numeric value. It is useful for things like sorting"""
-        skill = self._skillLevel.strip()
-        skillLetter = skill[0].upper()
-        yearLetter = skill[1:3]
+    def _get_numeric_skill(self):
+        """Convert the fencer's skill to a numeric value. It is useful for things like sorting."""
+        skill_letter = self._skill_level[0].upper()
+        year_letter = self._skill_level[1:3]
 
-        year = int(yearLetter)
+        year = int(year_letter)
 
         # This converts the skill to a value, where A > B > C ... > Z. The
         # formular was choosen by arbituary, while trying to fine one that satisifies the skill-formular
-        offsetFromBestSkill = ord(skillLetter) - 65
-        numericSkillLevel = 1000 + ((10 - offsetFromBestSkill)* 1000) + year
+        best_skill_grade_offset = ord(skill_letter) - 65
+        numeric_skill_level = 1000 + ((10 - best_skill_grade_offset) * 1000) + year
 
-        return numericSkillLevel
+        return numeric_skill_level

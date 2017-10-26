@@ -2,9 +2,9 @@
 import argparse
 
 from service.display import Display
-from service.dataReader import DataReader
-from service.pool import Pool as PoolService
-from model.pool import Pool as PoolModel
+from service.dataReader import Data_Reader
+from service.pool import Pool as Pool_Service
+from model.pool import Pool as Pool_Model
 from model.fencer import Fencer
 
 parser = argparse.ArgumentParser(description='Divvy fencers between pools')
@@ -24,23 +24,23 @@ if __name__ == '__main__':
         print 'A data file is needed'
 
     file = args.file.strip()
-    isQuiet = args.quiet
-    display = Display(isQuiet)
-    dataReader = DataReader(file, isQuiet)
+    is_quiet = args.quiet
+    display = Display(is_quiet)
+    data_reader = Data_Reader(file, is_quiet)
 
-    display.print_info('File: %s. isQuiet: %s' % (args.file, args.quiet))
+    display.print_info('File: %s. is_quiet: %s' % (args.file, args.quiet))
     display.print_info('Reading in csv')
-    rawCsv = dataReader.csv()
+    raw_csv = data_reader.csv()
 
-    if not rawCsv:
+    if not raw_csv:
         display.print_error('Exiting...')
         exit(-1)
     else:
         display.print_info('csv file read')
 
-    fencersModel = []
+    fencers_model = []
 
-    for player in rawCsv:
+    for player in raw_csv:
         if not player:
             print_warning('Fencer value read from csv data file is empty. Entry will be skipped')
             continue
@@ -54,9 +54,9 @@ if __name__ == '__main__':
             continue
 
         fencer = Fencer(player)
-        fencersModel.append(fencer)
+        fencers_model.append(fencer)
 
-    poolService = PoolService(fencersModel)
-    pools = poolService.getPools()
+    pool_service = Pool_Service(fencers_model)
+    pools = pool_service.get_pools()
 
     display.print_pools_to_screen(pools)

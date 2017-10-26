@@ -2,57 +2,42 @@
 import operator
 
 from service.display import Display
-from model.pool import Pool as PoolModel
+from model.pool import Pool as Pool_Model
 
 class Pool:
     """Pool for divvying."""
 
-    def __init__(self, fencersModel, isQuiet = False):
+    def __init__(self, fencers_model, is_quiet = False):
         """Initialize."""
-        self._fencers = fencersModel
-        self._fencersCount = 0
-        self._display = Display(isQuiet)
+        self._fencers = fencers_model
+        self._fencers_count = 0
+        self._display = Display(is_quiet)
 
         if self._fencers:
-            self._fencersCount = len(fencersModel)
+            self._fencers_count = len(self._fencers)
 
-    def _getFencerDivvyCount(self):
+    def _get_fencer_divvy_count(self):
         """Rules are that pools should consist of.
             mix of 6 and 7 fencers OR
             mix of 7 and 8 fencers OR
             mix of 5 and 6 fencers OR
             In this desending priority.
         """
-        if not self._fencers or self._fencersCount == 0:
+        if not self._fencers or self._fencers_count == 0:
             _display.print_error("There are no fencers to divvy")
             return None
 
-        for baseNumber in [6,7]:
-            lengthDivision = self._fencersCount / baseNumber
-            lengthModulus = self._fencersCount % baseNumber
+        for base_number in [6,7]:
+            length_division = self._fencers_count / base_number
+            length_modulus = self._fencers_count % base_number
 
-            if (lengthDivision <= lengthModulus):
-                return baseNumber
+            if (length_division <= length_modulus):
+                return base_number
 
         return 5 # default
 
-    def _createPools(self):
-        """Create new teams."""
-        pools = []
-        poolSize = self._fencersCount / self._getFencerDivvyCount()
-
-        if poolSize == None:
-            self._display.print_error('Cannot get team size. Cannot proceed')
-            return None
-
-        for i in range(0, poolSize):
-            name = ''.join(["Team", str(i + 1)])
-            pool = Pool(name)
-            pools.append(pool)
-
-        return pools
-
-    def _divvyFencersByClub(self):
+    def _divvy_fencers_by_club(self):
+        """Group fencers by club."""
         if not self._fencers:
             return None
 
@@ -68,44 +53,42 @@ class Pool:
 
         return clubs
 
-    def _getPoolsSortedBySkill(self):
-        clubs = self._divvyFencersByClub()
-        sortedClubs = {} # sorted by skills
+    def _get_pools_sorted_by_skill(self):
+        clubs = self._divvy_fencers_by_club()
+        sorted_clubs = {} # sorted by skills
 
         for club, fencers in clubs.items():
-            sortedClubs[club] =  sorted(fencers, key = lambda f:f.numericSkillLevel, reverse=True)
+            sorted_clubs[club] =  sorted(fencers, key = lambda f:f.numeric_skill_level, reverse=True)
 
-        return sortedClubs
+        return sorted_clubs
 
-    def getPools(self):
+    def get_pools(self):
         """Get teams."""
-        poolFencersCount = self._getFencerDivvyCount()
-        remainderFencersToDivvy = self._fencersCount % poolFencersCount
-        sortedClubs = self._getPoolsSortedBySkill()
-        pools = self._createPools()
+        pool_fencers_count = self._get_fencer_divvy_count()
+        sorted_clubs = self._get_pools_sorted_by_skill()
+        max_fencers_club_count = max((len(fencers)) for club, fencers in sorted_clubs.items())
 
-        maxClubFencersCount = max((len(fencers)) for club, fencers in sortedClubs.items())
+        serpentine_fencers_grouping = []
 
-        serpentineFencerGrouping = []
-
-        for i in range(0, maxClubFencersCount):
-            for club, fencers in sortedClubs.items():
+        for i in range(0, max_fencers_club_count):
+            for club, fencers in sorted_clubs.items():
                 fencersCount = len(fencers)
 
                 if i > (fencersCount - 1):
                     continue
 
-                serpentineFencerGrouping.append(fencers[i])
+                serpentine_fencers_grouping.append(fencers[i])
 
         pools = []
-        fencersSet = []
+        club_id = 1
 
-        for i in range(0, self._fencersCount, poolFencersCount):
-            poolName = ''.join(['Pool#', str(i)])
-            poolModel = PoolModel(poolName)
-            for j in range(i, (i + poolFencersCount - 1)):
-                poolModel.fencers.append(serpentineFencerGrouping[j])
+        for i in range(0, self._fencers_count, pool_fencers_count):
+            pool_name = ''.join(['Pool #', str(club_id)])
+            club_id = club_id + 1
+            pool_model = Pool_Model(pool_name)
+            for j in range(i, (i + pool_fencers_count - 1)):
+                pool_model.fencers.append(serpentine_fencers_grouping[j])
 
-            pools.append(poolModel)
+            pools.append(pool_model)
 
         return pools
