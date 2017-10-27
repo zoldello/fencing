@@ -11,6 +11,8 @@ class Fencer:
         self._first_name = (fencer[1] or "").strip()
         self._club = (fencer[2] or self._faux_for_clubless).strip()
         self._skill_level = (fencer[3] or "").strip().upper()
+        self._skill_grade = self._skill_level[0]
+        self._skill_year = self._skill_level[1:3]
 
         self._numeric_skill_level = self._get_numeric_skill()
 
@@ -39,20 +41,35 @@ class Fencer:
         """Numeric Skill level."""
         return self._numeric_skill_level
 
+    @property
+    def skill_year(self):
+        """Skill year."""
+        return self._skill_year
+
+    @property
+    def skill_grade(self):
+        """SKill grade."""
+        return self._skill_grade
+
+    @property
+    def faux_club(self):
+        """Faux club for clubless fencers."""
+        return self._faux_for_clubless
+
     def _get_numeric_skill(self):
         """Convert the fencer's skill to a numeric value. It is useful for things like sorting."""
 
         if self._skill_level[0] == 'U':
             return 0
 
-        skill_letter = self._skill_level[0]
-        year_letter = self._skill_level[1:3]
+        skill_grade = self._skill_level[0]
+        year_letters = self._skill_level[1:3]
 
-        year = int(year_letter)
+        year = int(year_letters)
 
         # This converts the skill to a value, where A > B > C > D > E. The
         # formular was choosen by arbituary, while trying to fine one that satisifies the skill-formular
-        best_skill_grade_offset = ord(skill_letter) - 65
+        best_skill_grade_offset = ord(skill_grade) - 65
         numeric_skill_level = 1000 + ((10 - best_skill_grade_offset) * 1000) + year
 
         return numeric_skill_level

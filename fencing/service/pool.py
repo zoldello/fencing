@@ -28,10 +28,10 @@ class Pool:
             return None
 
         for base_number in [6,7]:
-            length_division = self._fencers_count / base_number
-            length_modulus = self._fencers_count % base_number
+            division = self._fencers_count / base_number
+            modulus = self._fencers_count % base_number
 
-            if (length_division <= length_modulus):
+            if modulus == 0 or modulus == 1:
                 return base_number
 
         return 5 # default
@@ -64,9 +64,10 @@ class Pool:
 
     def get_pools(self):
         """Get teams."""
-        pool_fencers_count = self._get_fencer_divvy_count()
+        fencers_divvy_count = self._get_fencer_divvy_count()
         sorted_clubs = self._get_pools_sorted_by_skill()
         max_fencers_club_count = max((len(fencers)) for club, fencers in sorted_clubs.items())
+        pool_count = self._fencers_count / fencers_divvy_count
 
         serpentine_fencers_grouping = []
 
@@ -80,16 +81,27 @@ class Pool:
                 serpentine_fencers_grouping.append(fencers[i])
 
         pools = []
-        club_id = 1
 
-        for i in range(0, self._fencers_count, pool_fencers_count):
+        for i in range(0, pool_count):
+            pool_name = ''.join(['Pool #', str(i + 1)])
+            pool_model = Pool_Model(pool_name)
+            pools.append(pool_model)
+
+        for i in range(0, len(serpentine_fencers_grouping)):
+            index = i % pool_count
+
+            pools[index].fencers.append(serpentine_fencers_grouping[i])
+
+        """
+        for i in range(0, self._fencers_count, fencers_divvy_count):
             pool_name = ''.join(['Pool #', str(club_id)])
             club_id = club_id + 1
             pool_model = Pool_Model(pool_name)
-            for j in range(i, (i + pool_fencers_count - 1)):
-                print ''.join([str(j), ' ',  str(len(self._fencers)), ' ', str(pool_fencers_count) ])
+            for j in range(i, (i + fencers_divvy_count - 1)):
+                print ''.join([str(j), ' ',  str(len(self._fencers)), ' ', str(fencers_divvy_count) ])
                 pool_model.fencers.append(serpentine_fencers_grouping[j])
 
             pools.append(pool_model)
+        """
 
         return pools
