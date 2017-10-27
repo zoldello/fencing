@@ -2,24 +2,20 @@
 # -*- coding: utf-8 -*-
 
 """Tests for `model/fencing` package."""
+import unittest
 
-import pytest
-
-
-from fencing import fencing
+from fencing.model import Fencer
 
 
-@pytest.fixture
-def response():
-    """Sample pytest fixture.
+class TestFencing(unittest.TestCase):
+    """Model/Fencing. unit test"""
 
-    See more at: http://doc.pytest.org/en/latest/fixture.html
-    """
-    # import requests
-    # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
+    def __init___ensure_initialization_work(self):
+        target = { "last_name": "jackson123", 'first_name': 'michael', 'club': 'blood on the dance floor', 'skill_level': 'A18'}
+        fencer = Fencer(target)
+
+        self.assertEqual(fencer.last_name, target.last_name, 'Fencer model should properly set last name')
 
 
-def test_content(response):
-    """Sample pytest test function with the pytest fixture as an argument."""
-    # from bs4 import BeautifulSoup
-    # assert 'GitHub' in BeautifulSoup(response.content).title.string
+if __name__ == '__main__':
+    unittest.main()

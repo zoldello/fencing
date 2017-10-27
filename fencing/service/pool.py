@@ -87,6 +87,7 @@ class Pool:
             club_id = club_id + 1
             pool_model = Pool_Model(pool_name)
             for j in range(i, (i + pool_fencers_count - 1)):
+                print ''.join([str(j), ' ',  str(len(self._fencers)), ' ', str(pool_fencers_count) ])
                 pool_model.fencers.append(serpentine_fencers_grouping[j])
 
             pools.append(pool_model)
