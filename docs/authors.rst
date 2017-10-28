@@ -1,1 +1,1 @@
-.. include:: ../AUTHORS.rst
+Philip Adenekan (greenish_green@yahoo.com)

@@ -2,6 +2,16 @@
 fencing
 =======
 
+**Introduction**
+
+This code distributes fencers between pools. You feed it a file of fencers and the code does the work of distributing the players and displays the result to the screen
+
+Usage
+
+
+
+
+
 
 
 .. image:: https://pyup.io/repos/github/zoldello/fencing/shield.svg
@@ -20,9 +30,3 @@ Features
 
 Credits
 ---------
-
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
-
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
-
