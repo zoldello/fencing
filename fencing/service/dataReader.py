@@ -7,11 +7,11 @@ from service.display import Display
 class Data_Reader:
     """Reads in data from source."""
 
-    def __init__(self, file, isQuiet = False):
+    def __init__(self, file, isVerbose = False):
         """constructor."""
         self._file = file
         self._absolute_path = os.path.abspath(file)
-        self._display = Display(isQuiet)
+        self._display = Display(isVerbose)
 
     def _is_file_valid(self):
         """Check validity of file."""

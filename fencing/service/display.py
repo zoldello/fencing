@@ -2,18 +2,18 @@
 class Display:
     """class for displaying content to screen."""
 
-    def __init__(self, is_quiet = False):
+    def __init__(self, is_verbose = False):
         """Constructor."""
-        self._is_quiet = is_quiet
+        self._is_verbose = is_verbose
 
     def print_info(self, message):
-        """Informational. Display if isQuiet is false."""
-        if not self._is_quiet:
-            print ''.join(['Info', message])
+        """Informational. Display if isVerbose is false."""
+        if self._is_verbose:
+            print ''.join(['Info: ', message])
 
     def print_warning(self, message):
-        """Warning. Diplay is isQuiet is false."""
-        if not self._is_quiet:
+        """Warning. Diplay is isVerbose is false."""
+        if self._is_verbose:
             print ''.join(['Warning: ',  message])
 
     def print_error(self, message):

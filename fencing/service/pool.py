@@ -9,11 +9,11 @@ from model.pool import Pool as Pool_Model
 class Pool:
     """Pool for divvying."""
 
-    def __init__(self, fencers_model, is_quiet=False):
+    def __init__(self, fencers_model, is_verbose=False):
         """Initialize."""
         self._fencers = fencers_model
         self._fencers_count = 0
-        self._display = Display(is_quiet)
+        self._display = Display(is_verbose)
 
         if self._fencers:
             self._fencers_count = len(self._fencers)

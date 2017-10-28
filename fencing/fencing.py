@@ -8,10 +8,9 @@ from model.pool import Pool as Pool_Model
 from model.fencer import Fencer
 
 parser = argparse.ArgumentParser(description='Divvy fencers between pools')
-#parser.add_argument('-f', '--file', metavar='', type=argparse.FileType('r'), required=True, help='file with fencer data')
-parser.add_argument('-f', '--file', metavar='', required=True, help='file with fencer data')
+parser.add_argument('file', type=str, help='File with data')
 group = parser.add_mutually_exclusive_group()
-group.add_argument('-q', '--quiet', action='store_true', help='print only minimumly-needed content to screen')
+group.add_argument('-v', '--verbose', action='store_true', help='print debugging information ')
 
 args = parser.parse_args()
 
@@ -23,12 +22,13 @@ if __name__ == '__main__':
     if not args.file:
         print 'A data file is needed'
 
-    file = args.file.strip()
-    is_quiet = args.quiet
-    display = Display(is_quiet)
-    data_reader = Data_Reader(file, is_quiet)
 
-    display.print_info('File: %s. is_quiet: %s' % (args.file, args.quiet))
+    file = args.file.strip()
+    is_verbose = args.verbose
+    display = Display(is_verbose)
+    data_reader = Data_Reader(file, is_verbose)
+
+    display.print_info('File: %s. is_verbose: %s' % (args.file, args.verbose))
     display.print_info('Reading in csv')
     raw_csv = data_reader.csv()
 
