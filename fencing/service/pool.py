@@ -71,6 +71,8 @@ class Pool:
 
         serpentine_fencers_grouping = []
 
+
+        """
         for i in range(0, max_fencers_club_count):
             for club, fencers in sorted_clubs.items():
                 fencersCount = len(fencers)
@@ -79,6 +81,23 @@ class Pool:
                     continue
 
                 serpentine_fencers_grouping.append(fencers[i])
+        """
+
+        isReverse = False
+        while any(fencers != [] for fencers in sorted_clubs.values()):
+            temp_fencers = []
+            for fencers in sorted_clubs.values():
+                if not fencers:
+                    continue
+
+                temp_fencers.append(fencers.pop(0))
+
+            isReverse = not isReverse
+            serpentine_fencers_grouping.extend(sorted(temp_fencers, key = lambda f:f.numeric_skill_level, reverse=isReverse))
+
+        #for s in serpentine_fencers_grouping:
+            #print s.last_name
+
 
         pools = []
 

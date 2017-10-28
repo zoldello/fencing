@@ -14,6 +14,7 @@ class Fencer:
         self._skill_grade = self._skill_level[0]
         self._skill_year = self._skill_level[1:3]
 
+        self._print_friendly_club = self._club if self._club != self._faux_for_clubless else ""
         self._numeric_skill_level = self._get_numeric_skill()
 
     @property
@@ -52,9 +53,9 @@ class Fencer:
         return self._skill_grade
 
     @property
-    def faux_club(self):
-        """Faux club for clubless fencers."""
-        return self._faux_for_clubless
+    def print_friendly_club(self):
+        """print-friendly club for clubless fencers."""
+        return self._print_friendly_club
 
     def _get_numeric_skill(self):
         """Convert the fencer's skill to a numeric value. It is useful for things like sorting."""

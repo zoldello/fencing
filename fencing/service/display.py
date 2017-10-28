@@ -25,14 +25,7 @@ class Display:
         print 'Competitor List'
 
         for i in range(0, len(fencers)):
-            club = ''
-
-            if (fencers[i].club == fencers[i].faux_club):
-                club = ""
-            else:
-                club = fencers[i].club
-
-            print ' '.join([fencers[i].first_name, fencers[i].last_name, club, fencers[i].skill_grade, fencers[i].skill_year])
+            self._print_fencer_row(fencers[i])
         print ''
 
     def print_pools_to_screen(self, pools):
@@ -44,7 +37,8 @@ class Display:
             print ''.join(['--)------- ', pools[i].name, ' -------(--', '(', str(len(fencers)), ')'])
 
             for j in range(0, len(fencers)):
-                fencer =  fencers[j]
-                print ' '.join([fencer.first_name, fencer.last_name, fencer.club, fencer.skill_level])
-
+                self._print_fencer_row(fencers[j])
             print ' '
+
+    def _print_fencer_row(self, fencer):
+        print('{:15s}{:20s}{:25s}{:5s}{}'.format(fencer.first_name, fencer.last_name, fencer.print_friendly_club, fencer.skill_grade, fencer.skill_year))
