@@ -1,0 +1,66 @@
+User Stories and acceptance criteria
+
+--------------------
+User Story
+AS A USER, I WANT TO read in a data file of fencers, SO THAT I CAN assign pools
+
+Points: 3
+
+Task
+- Read in a cvs file (1 point) [input command]
+- Parse read in cvs file (1 point) [look for 3rd party lib]
+- Move parsed data to data structure (2 points) [tuple]
+
+User Benefit
+Very high, deal breaker if not done- Needed to get to basic level of implementation
+
+--------------------
+
+
+--------------------
+User Story
+AS A USER, I WANT TO get a list of pools, SO THAT I CAN know who belongs to what team
+
+Point: 16
+
+Acceptance criteria
+1. GIVEN a set of pools, WHEN a substract the total members between any given pool THEN the difference must be either less than or equal 1 (difference contraint)
+
+2. GIVEN a set of pools,  WHEN I count the memeber of any pool THEN the count should follow this priority and nothing else (descending order):
+a. 6 or 7 fencers
+b. 7 or 8 fencers
+c. 5 or 6
+
+
+GIVEN a set of pools, WHEN I look at any pool, THEN fencers in the same club should be even distributed amongst the pools to reduce collusion (while not violating difference contraint)
+
+GIVEN a set of pools, WHEN I compare pools' fencers, THEN each pools should have members of the same skill level, as much as possible (while not violating difference contraint)
+
+--------------------
+
+User Benefit
+Very High- Needed to get to intermidiate level of implementation
+--------------------
+
+
+--------------------
+Story: AS A USER, I WANT TO only have between 12 - 100 participants (inclusive), SO THAT I CAN keep the total paricipants to a reasonable size
+
+Point: 2
+
+Task
+1. Count number of fencers
+2. Validate fencers-count
+3. Either give warning and stop or proceed with applicatoon
+
+Acceptance criteria
+GIVEN a data set of user, WHEN I get less than 12 fencers, THEN the end-user should be warned and the problem not proceed
+
+GIVEN a data set of user, WHEN I get more than 101 fencers, THEN the end-user should be warned and the problem not proceed
+
+GIVEN a data set of user, WHEN I get between 12 - 100 fencers, THEN the end-user should be proceed without problem
+
+
+User Benefit
+Low.
+--------------------

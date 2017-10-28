@@ -1,11 +1,19 @@
 """class for fencer model."""
 import uuid
 
+from service.display import Display
+
 class Fencer:
     """Fencer."""
 
     def __init__(self, fencer):
         """Initialize."""
+        display = Display(False)
+
+        if not fencer:
+            display.print_warning("Fencer is falsey. Fencer is not initilaized")
+            return
+
         self._faux_for_clubless = ''.join(['Club_', str(uuid.uuid4())])
         self._last_name = (fencer[0] or "").strip()
         self._first_name = (fencer[1] or "").strip()
