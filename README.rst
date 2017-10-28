@@ -93,7 +93,7 @@ Fencers with no club were given an faux club. However, the club is not displayed
 ============
 Contributor
 ============
-This code was solely developed by me- Philip Adenekan. While I used resources like Pluralsight, bing.com, stackoverflow, YouTube and other common tools, to learn things, I did not ask for nor receive assistance directly from anyone- Everything is solely my work. I have a strong background in JavaScript and in the Microsoft stack. However, that does not mean I cannot quickly pick up a new stack (sometimes in minutes). Many stacks share the same principles, so adjusting is not hard, especially when there is a strong incentive like if successful, I can work with some bright people and researcher.
+This code was solely developed by me- Philip Adenekan. While I used resources like Pluralsight, bing.com, stackoverflow, YouTube and other common tools, to learn things, I did not ask for nor receive assistance directly from anyone- Everything is solely my work. I have a strong background in JavaScript and in the Microsoft stack. However, that does not mean I cannot quickly pick up a new stack (sometimes in minutes). Many stacks share the same principles, so adjusting is not hard, especially when there is a strong incentive like if successful, I can work with some bright people and researcher. Only locally, I used git to store versions of the code, in case I need to rollback. However, I have pushed this code to any public repository or given it to anyone.
 
 
 ============
@@ -106,7 +106,7 @@ This code can be used by anyone employed by the University of California at Sant
 ============
 Further Work
 ============
- - I am quite busy at work and I have commitments to a side project of a friend who is starting a startup, so I had to make some sacrifices. I had to sacrifice unit test. Despite that, I truly believe in their value.
+ - I am quite busy at work and I have commitments to a side project of a friend who is starting a startup, so I had to make some sacrifices. I had to sacrifice unit test. Despite that, I truly believe in their value. If I had the time, I would of  had used the unittest modulue (rather than the pytest in setup.py)
 
  - I did not do much work to make the code compatible with python 3. This is something I would deem essential normally.
 
