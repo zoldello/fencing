@@ -1,13 +1,15 @@
 """Class for pool."""
 import operator
+import collections
 
 from service.display import Display
 from model.pool import Pool as Pool_Model
 
+
 class Pool:
     """Pool for divvying."""
 
-    def __init__(self, fencers_model, is_quiet = False):
+    def __init__(self, fencers_model, is_quiet=False):
         """Initialize."""
         self._fencers = fencers_model
         self._fencers_count = 0
@@ -27,14 +29,14 @@ class Pool:
             _display.print_error("There are no fencers to divvy")
             return None
 
-        for base_number in [6,7]:
+        for base_number in [6, 7]:
             division = self._fencers_count / base_number
             modulus = self._fencers_count % base_number
 
             if modulus == 0 or modulus == 1:
                 return base_number
 
-        return 5 # default
+        return 5  # default
 
     def _divvy_fencers_by_club(self):
         """Group fencers by club."""
@@ -55,10 +57,10 @@ class Pool:
 
     def _get_pools_sorted_by_skill(self):
         clubs = self._divvy_fencers_by_club()
-        sorted_clubs = {} # sorted by skills
+        sorted_clubs = collections.OrderedDict()  # sorted by skills
 
         for club, fencers in clubs.items():
-            sorted_clubs[club] =  sorted(fencers, key = lambda f:f.numeric_skill_level, reverse=True)
+            sorted_clubs[club] = sorted(fencers, key = lambda f:f.numeric_skill_level, reverse=True)
 
         return sorted_clubs
 
@@ -70,18 +72,6 @@ class Pool:
         pool_count = self._fencers_count / fencers_divvy_count
 
         serpentine_fencers_grouping = []
-
-
-        """
-        for i in range(0, max_fencers_club_count):
-            for club, fencers in sorted_clubs.items():
-                fencersCount = len(fencers)
-
-                if i > (fencersCount - 1):
-                    continue
-
-                serpentine_fencers_grouping.append(fencers[i])
-        """
 
         isReverse = False
         while any(fencers != [] for fencers in sorted_clubs.values()):
@@ -95,10 +85,6 @@ class Pool:
             isReverse = not isReverse
             serpentine_fencers_grouping.extend(sorted(temp_fencers, key = lambda f:f.numeric_skill_level, reverse=isReverse))
 
-        #for s in serpentine_fencers_grouping:
-            #print s.last_name
-
-
         pools = []
 
         for i in range(0, pool_count):
@@ -110,17 +96,5 @@ class Pool:
             index = i % pool_count
 
             pools[index].fencers.append(serpentine_fencers_grouping[i])
-
-        """
-        for i in range(0, self._fencers_count, fencers_divvy_count):
-            pool_name = ''.join(['Pool #', str(club_id)])
-            club_id = club_id + 1
-            pool_model = Pool_Model(pool_name)
-            for j in range(i, (i + fencers_divvy_count - 1)):
-                print ''.join([str(j), ' ',  str(len(self._fencers)), ' ', str(fencers_divvy_count) ])
-                pool_model.fencers.append(serpentine_fencers_grouping[j])
-
-            pools.append(pool_model)
-        """
 
         return pools
