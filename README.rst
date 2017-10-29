@@ -5,7 +5,7 @@ Fencing Project
 ************
 Introduction
 ************
-This code divvies fencers amongst pools. It reads in a file of fencers and outputs on the screen, a sorted list of fencers (competitors) and pools with associated fencers.
+This code divvies fencers amongst pools. It reads in a file of fencers and outputs a sorted list of fencers (competitors) and pools with associated fencers.
 
 ============
 Dependencies
@@ -16,14 +16,13 @@ Dependencies
 Python Version
 ***************
 
-Python 2.7 is needed to run the code. You can find a video on how to install it on Linux on this video: `https://www.youtube.com/watch?v=6vpHfG8E8JI <https://www.youtube.com/watch?v=6vpHfG8E8JI>`_. The windows equivalent can be found on: `https://www.youtube.com/watch?v=yiB9mVtKMz0 <https://www.youtube.com/watch?v=yiB9mVtKMz0>`_. This code was build on Linux and only tested on it. However, it should run find on windows or mac.
-
+Python 2.7 is best used to run the code. You can find a video on how to install it on Linux on this video: `https://www.youtube.com/watch?v=6vpHfG8E8JI <https://www.youtube.com/watch?v=6vpHfG8E8JI>`_. The windows equivalent can be found on: `https://www.youtube.com/watch?v=yiB9mVtKMz0 <https://www.youtube.com/watch?v=yiB9mVtKMz0>`_. Nevertheless, the was also built to work on Python 3.6.3 and it works fine on it.
 
 ***********************
 Operating System
 ***********************
 
-This was built using Ubuntu (Linux). However, since no special library was used, in theory, it should work on Windows or Mac.
+This was built using Ubuntu (Linux) and only tested on it. However, since no special library was used, in theory, it should work on Windows or Mac; and was built with that in mind.
 
 ============
 Usage
@@ -49,7 +48,7 @@ Where
 
 This assumes you denote **python 2.7 as "python"**. Change it if you use a different denotation.
 
-The project has a data-folder that stores sample data. So, for example, to run that data, you can run any one of these commands to try out the project:
+The project has a data-folder that stores sample data. So, for example, to run a sample data file, you can run any one of these commands to try out the project:
 
     - **python ./fencing/fencing.py "data/MEconflicts.csv"**
     - **python ./fencing/fencing.py "data/MEconflicts.csv"**
@@ -65,10 +64,13 @@ For help run:
     **python ./fencing/fencing.py -h**
 
 
-If you want an executable, in the code, I created one at:
+If you want an executable, in the code, I created one by running:
+    **python setup.py**
+
+The resultant file will be stored at:
     **dist/fencing-1.0.0.tar.gz**
 
-The file .gz file needs to be uncompressed
+The .gz file needs to be uncompressed
 
 
 This code should work. Contact me at greenish_green@yahoo.com if you have any problem running the code.
@@ -76,7 +78,7 @@ This code should work. Contact me at greenish_green@yahoo.com if you have any pr
 ====================
 My Programming Style
 ====================
-My programming style is a module do one specific thing and do it well. I truly believe in the single responsibility principle. This adds some complexity as there may be many files, but I think it the benefits of this approach (like easier unit test and isolation) is worth that expense.  Anything not related to modules's core purpose is outsources to another module focused on that. I use folders to guide me to where I can find resources. For example, fencing at the root of the project tells me that this folder holds all the Pool-distribution code. The model subfolder tells me where I can get a module that hold data. The service folder by its name tell me where I can find thing that do heavy lifting.
+My programming style is to make a module do one specific thing and do it well. I truly believe in the single responsibility principle. This adds some complexity as there may be many files, but I think it the benefits of this approach (like easier unit test and isolation) is worth that expense.  Anything not related to modules's core purpose is outsources to another module focused on that. I use folders to guide me to where I can find resources. For example, fencing at the root of the project tells me that this folder holds all the Pool-distribution code. The model subfolder tells me where I can get a module that hold data. The service folder by its name tell me where I can find thing that do heavy lifting- aka provide service.
 
 ============
 Architecture
@@ -85,7 +87,7 @@ The file: **fencing.py** is the entry point into the application. It is an orche
 
 The library: **argparse** module is used to parse the command line arguments.
 
-All data types are stored in the **model** folder. In a way, it can be considered an active model because it does some processing. However, it does not read external files. It does minimum processing and its primary job is to hold data. The **fencer.py** file holds data on fencers (the players, the participants.) The **pool.py** file holds data on pools.
+All data objects are stored in the **model** folder. In a way, it can be considered an active model because it does some processing. However, it does not read external files. It does minimum processing and its primary job is to hold data. The **fencer.py** file holds data on fencers (the players, the participants.) The **pool.py** file holds data on pools.
 
 The **service** folder container code that does task. The file **dataReader.py** read the CSV file. The **display.py** file is used to display content to the screen. It is a wrapper around the Python print command. The **pool.py** file under the service folder (different from the one in model) does data processing on fencers-data and out put pools
 
@@ -93,7 +95,7 @@ The data folder contain sample data that can be used for testing.
 
 The docs folder container standard files. However, the release subfolder contain information I used to code this application like user stories and acceptance criteria. While I did not strictly follow it, still, you can look into it if you are interested in some early thinkings I had about this application.
 
-You can get a executable of this application in the dist folder. You need to uncompress the file in it.
+You can get a executable of this application in the dist folder. You need to uncompress the file in it (see Usage section).
 
 The other files like AUTHORS.rst are standard python files.
 
@@ -144,13 +146,11 @@ Here are some liberties I took in detecting errors in data
 ============
 Further Work
 ============
- - I am quite busy at work and I have commitments to a side project of a friend who is starting a startup, so I had to make some sacrifices. I had to sacrifice unit test. Despite that, I truly believe in their value. If I had the time, I would of  had used the unittest modulue (rather than the pytest in setup.py)
-
- - I did not do much work to make the code compatible with python 3. This is something I would deem essential normally.
+ - I am quite busy at work and I have commitments to a side project of a friend who is starting a startup, so I had to make some sacrifices. I had to sacrifice unit test, integration test and BDD test. Despite that, I truly believe in its value. If I had the time, I would of  had used the unittest modulue (rather than the pytest in setup.py)
 
  - My result is a local solution (a correct solution from among many) rather than a global solution (guarantee to always be the best answer.) I could of had used techniques like looking at total combined skilled and mixing players to try to get all combined skills acrossed pools to be more balanced. However, as per the requirements, it seems to be that a global solution along with associated complexity would not add any more value than a local one. So, this was not pursued in this iteration
 
-============
-Questions
-============
+=======================
+Questions or Comments
+=======================
 Contact me at: greenish_green@yahoo.com

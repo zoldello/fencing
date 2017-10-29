@@ -43,7 +43,7 @@ class Pool:
         if not self._fencers:
             return None
 
-        clubs = {}
+        clubs = collections.OrderedDict()
 
         for fencer in self._fencers:
             club = fencer.club
@@ -87,13 +87,13 @@ class Pool:
 
         pools = []
 
-        for i in range(0, pool_count):
+        for i in range(0, int(pool_count)):
             pool_name = ''.join(['Pool #', str(i + 1)])
             pool_model = Pool_Model(pool_name)
             pools.append(pool_model)
 
         for i in range(0, len(serpentine_fencers_grouping)):
-            index = i % pool_count
+            index = int(i % pool_count)
 
             pools[index].fencers.append(serpentine_fencers_grouping[i])
 

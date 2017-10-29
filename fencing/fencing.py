@@ -26,10 +26,11 @@ if __name__ == '__main__':
 
     os.system(clear)
 
-    print "Pool creator is now running... \n"
+    print("Pool creator is now running...")
+    print('')
 
     if not args.file:
-        print 'A data file is needed'
+        print('A data file is needed')
 
     file = args.file.strip()
     is_verbose = args.verbose
