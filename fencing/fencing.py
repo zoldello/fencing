@@ -1,5 +1,7 @@
 """Entry point to the application."""
 import argparse
+import os
+import platform
 
 from service.display import Display
 from service.dataReader import Data_Reader
@@ -17,6 +19,13 @@ args = parser.parse_args()
 """Main module."""
 if __name__ == '__main__':
     """Entry point."""
+    if platform.system() == 'Linux':
+        clear = 'clear'
+    else:
+        clear = 'cls'
+
+    os.system(clear)
+
     print "Pool creator is now running... \n"
 
     if not args.file:
@@ -41,15 +50,27 @@ if __name__ == '__main__':
 
     for f in raw_csv:
         if not f:
-            print_warning('Invalid read. Fencer is not set in file-line.')
+            display.print_error('Invalid read. Fencer info is not set in file-line.')
             continue
 
         if not f[3]:
-            print_warning('Invalid fener. Skill level required.')
+            display.print_error('Invalid fener. Skill level required.')
             continue
 
+        if not str.isalpha(f[3][0]):
+            display.print_error('Invalid skill in fencer. First character is not an alphabet')
+            continue
+
+        year = f[3][1:]
+        if year:
+            try:
+                int(year)
+            except ValueError:
+                display.print_error('Invalid skill. The year is not a number')
+                continue
+
         if not f[0]:
-            print_warning('Invalid fencer. Fencer needs a last name.')
+            display.print_warning('Invalid fencer. Fencer needs a last name.')
             continue
 
         fencer = Fencer(f)

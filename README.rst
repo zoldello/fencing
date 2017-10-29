@@ -128,6 +128,18 @@ License
 This code can be used by anyone employed by the University of California at Santa Cruz or by anyone the aforementioned person chooses; for the purpose of evaluating my (Philip Adenekan) programming skills and thought process.
 
 
+============
+Assumptions
+============
+
+Here are some liberties I took in detecting errors in data
+
+- A last name is required. The fencer entry-line is ignored if one is not provided
+- A skill level is required. The fencer entry-line without one is ignored
+- A blank line is considered an invalid entry. It is ignored.
+- In skill, the first character must be an alphabet. If not, the fencer entry-line is ignored
+- In skill, if there is a year, it must be numeric. If not, the fencer entry-line is ignored
+- White spaces around any fencer field (like last name) is trimmed. The fencer entry is proceed
 
 ============
 Further Work

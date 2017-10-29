@@ -49,7 +49,7 @@ class Fencer:
     @property
     def numeric_skill_level(self):
         """Numeric Skill level."""
-    
+
         return self._numeric_skill_level
 
     @property
