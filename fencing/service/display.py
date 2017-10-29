@@ -24,13 +24,13 @@ class Display:
         print ''.join(['Error: ',  message])
 
     def print_fencers_to_screen(self, fencers):
-        """Print list of feners to screen."""
+        """Print list of fencers to screen."""
 
         if not fencers:
             self.print_warning('Fencers to print to screen is empty')
             return
 
-        print ''.join(['Competitor List', '(', str(len(fencers)), ')', ' fencers'])
+        print ''.join(['Competitor List', ' (', str(len(fencers)), ' ', 'fencers', ')'])
 
         for fencer in fencers:
             self._print_fencer_row(fencer)

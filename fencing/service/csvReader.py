@@ -1,11 +1,12 @@
 """Read in file."""
 import csv
 import os
+import collections
 
 from service.display import Display
 
 
-class CsvReader:
+class Csv_Reader:
     """Reads in data from source."""
 
     def __init__(self, file, isVerbose=False):
@@ -34,19 +35,19 @@ class CsvReader:
             return None
 
         self._display.print_info('Reading file: {0}'.format(self._file))
-        content = []
+        read = collections.OrderedDict()
 
         with open(self._absolute_path) as csvFile:
             reader = csv.reader(csvFile, delimiter=',')
             for row in reader:
-                content.append(row)
+                read[str(int(reader.line_num))] = row
 
-        contentLength = len(content)
+        readLength = len(read)
 
-        if not (contentLength >= 12 and contentLength < 100):
+        if not (readLength >= 12 and readLength < 101):
             self._display.print_error('Fencers-count is outside range of 12 and 100. The count is: {0}'.format(contentLength))
             return None
 
-        self._display.print_info('fencer #: {0}'.format(contentLength))
+        self._display.print_info('fencer #: {0}'.format(readLength))
 
-        return content
+        return read

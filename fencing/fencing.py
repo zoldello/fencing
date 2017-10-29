@@ -4,7 +4,7 @@ import os
 import platform
 
 from service.display import Display
-from service.csvReader import CsvReader
+from service.csvReader import Csv_Reader
 from service.pool import Pool as Pool_Service
 from model.pool import Pool as Pool_Model
 from model.fencer import Fencer
@@ -34,13 +34,13 @@ if __name__ == '__main__':
     file = args.file.strip()
     is_verbose = args.verbose
     display = Display(is_verbose)
-    csvReader = CsvReader(file, is_verbose)
+    csv_Reader = Csv_Reader(file, is_verbose)
 
     display.print_info('File: %s. is_verbose: %s' % (args.file, args.verbose))
     display.print_info('Reading in csv')
-    raw_csv = csvReader.read()
+    raw_csv = csv_Reader.read()
 
-    if not raw_csv:
+    if not raw_csv or len(raw_csv) == 0:
         display.print_error('Exiting...')
         exit(-1)
     else:
@@ -48,32 +48,34 @@ if __name__ == '__main__':
 
     fencers_model = []
 
-    for f in raw_csv:
-        if not f:
-            display.print_error('Invalid read. Fencer info is not set in file-line.')
+    for line_num, fencer_entry in raw_csv.items():
+        display.print_info('Reading line #{0}'.format(line_num))
+
+        if not fencer_entry:
+            display.print_error('Invalid read at line: {0}. Fencer info is not set in file-line.'.format(line_num))
             continue
 
-        if not f[3]:
-            display.print_error('Invalid fener. Skill level required.')
+        if not fencer_entry[3]:
+            display.print_error('Invalid fencer at line: {0}. Skill level required.'.format(line_num))
             continue
 
-        if not str.isalpha(f[3][0]):
-            display.print_error('Invalid skill in fencer. First character is not an alphabet')
+        if not str.isalpha(fencer_entry[3][0]):
+            display.print_error('Invalid skill at line: {0}. First character is not an alphabet'.format(line_num))
             continue
 
-        year = f[3][1:]
+        year = fencer_entry[3][1:]
         if year:
             try:
                 int(year)
             except ValueError:
-                display.print_error('Invalid skill. The year is not a number')
+                display.print_error('Invalid skill at line: {0}. The year is not a number'.format(line_num))
                 continue
 
-        if not f[0]:
-            display.print_warning('Invalid fencer. Fencer needs a last name.')
+        if not fencer_entry[0]:
+            display.print_warning('Invalid fencer at line: {0}. Fencer needs a last name.'.format(line_num))
             continue
 
-        fencer = Fencer(f)
+        fencer = Fencer(fencer_entry)
         fencers_model.append(fencer)
 
     fencers_model = sorted(fencers_model, key=lambda f:f.numeric_skill_level, reverse=True)
