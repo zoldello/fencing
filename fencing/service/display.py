@@ -1,8 +1,10 @@
 """Used to Display content to the screen."""
+
+
 class Display:
     """class for displaying content to screen."""
 
-    def __init__(self, is_verbose = False):
+    def __init__(self, is_verbose=False):
         """Constructor."""
         self._is_verbose = is_verbose
 
@@ -21,7 +23,7 @@ class Display:
         print ''.join(['Error: ',  message])
 
     def print_fencers_to_screen(self, fencers):
-        print 'swapping in the following entries'
+        """Print list of feners to screen."""
         print 'Competitor List'
 
         for i in range(0, len(fencers)):
@@ -29,11 +31,10 @@ class Display:
         print ''
 
     def print_pools_to_screen(self, pools):
-        """.Display Pool to screen"""
-
+        """.Display Pool to screen."""
         print 'Pool List'
         for i in range(0, len(pools)):
-            fencers = sorted(pools[i].fencers, key = lambda f:f.numeric_skill_level, reverse=True)
+            fencers = sorted(pools[i].fencers, key=lambda f: f.numeric_skill_level, reverse=True)
             print ''.join(['--)------- ', pools[i].name, ' -------(--', '(', str(len(fencers)), ')'])
 
             for j in range(0, len(fencers)):

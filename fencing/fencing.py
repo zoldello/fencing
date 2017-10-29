@@ -22,7 +22,6 @@ if __name__ == '__main__':
     if not args.file:
         print 'A data file is needed'
 
-
     file = args.file.strip()
     is_verbose = args.verbose
     display = Display(is_verbose)
@@ -42,15 +41,15 @@ if __name__ == '__main__':
 
     for player in raw_csv:
         if not player:
-            print_warning('Fencer value read from csv data file is empty. Entry will be skipped')
+            print_warning('Invalid read. Fencer is not set in file-line.')
             continue
 
         if not player[3]:
-            print_warning('Skill level required to place a fencer. Entry will be skipped')
+            print_warning('Invalid fener. Skill level required.')
             continue
 
         if not player[0]:
-            print_warning('At least a last name is needed to identify a fencer. Entry will be skipped')
+            print_warning('Invalid fencer. Fencer needs a last name.')
             continue
 
         fencer = Fencer(player)

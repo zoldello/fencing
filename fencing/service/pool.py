@@ -20,10 +20,10 @@ class Pool:
 
     def _get_fencer_divvy_count(self):
         """Rules are that pools should consist of.
-            mix of 6 and 7 fencers OR
-            mix of 7 and 8 fencers OR
-            mix of 5 and 6 fencers OR
-            In this desending priority.
+        mix of 6 and 7 fencers OR
+        mix of 7 and 8 fencers OR
+        mix of 5 and 6 fencers OR
+        In this desending priority.
         """
         if not self._fencers or self._fencers_count == 0:
             _display.print_error("There are no fencers to divvy")
@@ -48,7 +48,7 @@ class Pool:
         for fencer in self._fencers:
             club = fencer.club
 
-            if not club in clubs:
+            if club not in clubs:
                 clubs[club] = []
 
             clubs[club].append(fencer)
@@ -60,7 +60,7 @@ class Pool:
         sorted_clubs = collections.OrderedDict()  # sorted by skills
 
         for club, fencers in clubs.items():
-            sorted_clubs[club] = sorted(fencers, key = lambda f:f.numeric_skill_level, reverse=True)
+            sorted_clubs[club] = sorted(fencers, key=lambda f: f.numeric_skill_level, reverse=True)
 
         return sorted_clubs
 
@@ -83,7 +83,7 @@ class Pool:
                 temp_fencers.append(fencers.pop(0))
 
             isReverse = not isReverse
-            serpentine_fencers_grouping.extend(sorted(temp_fencers, key = lambda f:f.numeric_skill_level, reverse=isReverse))
+            serpentine_fencers_grouping.extend(sorted(temp_fencers, key=lambda f: f.numeric_skill_level, reverse=isReverse))
 
         pools = []
 

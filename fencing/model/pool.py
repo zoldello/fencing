@@ -1,5 +1,6 @@
 """Pool class."""
 
+
 class Pool:
     """docstring for Pool."""
 

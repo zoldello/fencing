@@ -4,10 +4,11 @@ import os
 
 from service.display import Display
 
+
 class Data_Reader:
     """Reads in data from source."""
 
-    def __init__(self, file, isVerbose = False):
+    def __init__(self, file, isVerbose=False):
         """constructor."""
         self._file = file
         self._absolute_path = os.path.abspath(file)
@@ -22,7 +23,7 @@ class Data_Reader:
             isValid = False
 
         if not os.path.isfile(self._absolute_path):
-            self._display.print_error('File does not exist. File name is: {0}'.format(self._absolute_path))
+            self._display.print_error('File does not exist. Name is: {0}'.format(self._absolute_path))
             isValid = False
 
         return isValid
@@ -32,7 +33,7 @@ class Data_Reader:
         if not self._is_file_valid():
             return None
 
-        self._display.print_info('Reading a file with name: {0}'.format(self._file))
+        self._display.print_info('Reading file: {0}'.format(self._file))
         content = []
 
         with open(self._absolute_path) as csvFile:
@@ -43,7 +44,7 @@ class Data_Reader:
         contentLength = len(content)
 
         if not (contentLength >= 12 and contentLength < 100):
-            self._display.print_error('The number of fencers is not with in the range of 12 and 100 (100 is inclusive.). The range you have is: {0}'.format(contentLength))
+            self._display.print_error('Fencers-count is outside range of 12 and 100. The count is: {0}'.format(contentLength))
             return None
 
         self._display.print_info('fencer #: {0}'.format(contentLength))
