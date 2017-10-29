@@ -1,45 +1,65 @@
-============
-Fencing
-============
-
+================
+Fencing Project
+================
 
 ************
 Introduction
 ************
-This code distributes fencers amongst pools. It reads in a file of fencers and outputs on the screen back pools with associated fencers.
+This code divvies fencers amongst pools. It reads in a file of fencers and outputs on the screen, a sorted list of fencers (competitors) and pools with associated fencers.
 
 ============
 Dependencies
 ============
 
+
+***************
 Python Version
+***************
 
-Python 2.7 is needed to run the code. You can find a video on how to install it on Linux on this video: `https://www.youtube.com/watch?v=6vpHfG8E8JI <https://www.youtube.com/watch?v=6vpHfG8E8JI>`_. The windows equivalent can be found on: `https://www.youtube.com/watch?v=yiB9mVtKMz0 <https://www.youtube.com/watch?v=yiB9mVtKMz0>`_. This code was build on Linux and only tested there. However, it should run find on windows or mac.
+Python 2.7 is needed to run the code. You can find a video on how to install it on Linux on this video: `https://www.youtube.com/watch?v=6vpHfG8E8JI <https://www.youtube.com/watch?v=6vpHfG8E8JI>`_. The windows equivalent can be found on: `https://www.youtube.com/watch?v=yiB9mVtKMz0 <https://www.youtube.com/watch?v=yiB9mVtKMz0>`_. This code was build on Linux and only tested on it. However, it should run find on windows or mac.
 
+
+***********************
 Operating System
-This was built using Ubuntu. However, since no special library was used, in theory, it should work on Windows or Mac.
+***********************
+
+This was built using Ubuntu (Linux). However, since no special library was used, in theory, it should work on Windows or Mac.
 
 ============
 Usage
 ============
-To run the code directly, run:
-**python [PATH]/fencing.py  "[DATA_FILE]"**
+
+
+****************************
+Third Party Dependency
+****************************
+Use pip to install argparse:
+
+    **pip install argparse**
+
+
+To run the code directly, run this command:
+
+    **python [PATH]/fencing.py  "[DATA_FILE]"**
 
 Where
 
 - [PATH] is the path of fencing.py
 - [DATA_FILE] is a CSV (comma-separated file) contain data on fencers
 
-This assumes you denote *python 2.7 as "python"*. Change it if you use a different denotation.
+This assumes you denote **python 2.7 as "python"**. Change it if you use a different denotation.
 
-The project has a data-folder that stores sample data. So, for example, to run that data, you can run:
+The project has a data-folder that stores sample data. So, for example, to run that data, you can run any one of these commands to try out the project:
 
-    **python ./fencing/fencing.py "data/MEconflicts.csv"**
+    - **python ./fencing/fencing.py "data/MEconflicts.csv"**
+    - **python ./fencing/fencing.py "data/MEconflicts.csv"**
+    - **python ./fencing/fencing.py "data/MEconflicts.csv"**
 
 
-If you want debugging information, you can run the verbose option with:
+
+
+If you want debugging information, you can run the verbose option with: **-v**. Here is a sample commands:
     **python ./fencing/fencing.py -v "data/MEconflicts.csv"**
-
 
 For help run:
     **python ./fencing/fencing.py -h**
@@ -48,16 +68,15 @@ For help run:
 If you want an executable, in the code, I created one at:
     **dist/fencing-1.0.0.tar.gz**
 
-
-The file needs to be uncompressed
+The file .gz file needs to be uncompressed
 
 
 This code should work. Contact me at greenish_green@yahoo.com if you have any problem running the code.
 
-============
-Style
-============
-My programming style is to many files do one specific thing and do it well. I truly believe in the single responsibility principle. I admit, I sometime use it to a fault where there are many files which add a bit of complexity some other developers do not like (sometimes that Robert Martin (Uncles Bob) calls a "sea of files".) Anything not related to modules's core purpose is outsources to another module focused on that. I use folders to guide me to where I can find resources. For example, fencing at the root of the project tells me that this folder holds all the Pool-distribution code. The model subfolder tells me where I can get a module that hold data. The service folder by its name tell me where I can find thing that do heavy lifting.
+====================
+My Programming Style
+====================
+My programming style is a module do one specific thing and do it well. I truly believe in the single responsibility principle. This adds some complexity as there may be many files, but I think it the benefits of this approach (like easier unit test and isolation) is worth that expense.  Anything not related to modules's core purpose is outsources to another module focused on that. I use folders to guide me to where I can find resources. For example, fencing at the root of the project tells me that this folder holds all the Pool-distribution code. The model subfolder tells me where I can get a module that hold data. The service folder by its name tell me where I can find thing that do heavy lifting.
 
 ============
 Architecture
@@ -81,8 +100,15 @@ The other files like AUTHORS.rst are standard python files.
 ============
 Algorithms
 ============
-You can find the code for distributing pools in **service/pool.py**. I created an Order dictionary (regulars dictionaries do not guarantee ordering) while the key is a club and the value of fencers associated to the club. The fencers are sorted by skills, beginning with the most skilled. I scrap off each fencers, starting from most talent, off each club; and then place them in a list. I continue this process until there are no fencers in the dictionary.
-When the dictionary is empty, I place the fencers in the pool in a sepentine manner.
+You can find the code for distributing pools in **service/pool.py**. Here is a summary of how the fencers are distributed among pools:
+
+ - I created an order dictionary where the keys club-names and the values are a list of fencers
+ - In the ordered dictionary, the list of fencers are sorted by skill
+ - I pop (physically remove) the top fencer off the ordered dictionary, from all teams.
+ - I sort the fencers based on skill. Then place them in another list. I sort based on skill in on iteration and reverse this order in the next; to prevent cluttering off the most talented in one pool (more information later.)
+ - I do this until the order dictionary is empty. I ignore clubs that become empty.
+
+This arrangement creates a serpentine-order of fencers based on talent, where in one section (based off club-count) you have the order based off the most skilled and in this next section you have sorting in reverse of this, and this alternates. I then get this list and distribute the fencer amongst the pools.:
 
 To create pools, I find the modulus between fencers-count and 6. If the remainder is greater than 1, I repeat this but with 7. If the remainder is also greater than 1, I divide fencers in groups of 5.
 
@@ -93,7 +119,7 @@ Fencers with no club were given an faux club. However, the club is not displayed
 ============
 Contributor
 ============
-This code was solely developed by me- Philip Adenekan. While I used resources like Pluralsight, bing.com, stackoverflow, YouTube and other common tools, to learn things, I did not ask for nor receive assistance directly from anyone- Everything is solely my work. I have a strong background in JavaScript and in the Microsoft stack. However, that does not mean I cannot quickly pick up a new stack (sometimes in minutes). Many stacks share the same principles, so adjusting is not hard, especially when there is a strong incentive like if successful, I can work with some bright people and researcher. Only locally, I used git to store versions of the code, in case I need to rollback. However, I have pushed this code to any public repository or given it to anyone.
+This code was solely developed by me- Philip Adenekan. While I used resources like Pluralsight, bing.com, stackoverflow, YouTube and other common tools, I did not ask for nor receive assistance directly from anyone- Everything is solely my work. I have a strong background in JavaScript and in the Microsoft stack. However, that does not mean I cannot quickly pick up a new stack (sometimes within minutes). Many stacks share the same principles, so adjusting is not hard, especially when there is a strong incentive like if successful, I can work with some bright people and researcher. Only locally, I used git to store versions of the code, in case I need to rollback. However, I have pushed this code to any public repository or given it to anyone.
 
 
 ============
@@ -110,6 +136,7 @@ Further Work
 
  - I did not do much work to make the code compatible with python 3. This is something I would deem essential normally.
 
+ - My result is a local solution (a correct solution from among many) rather than a global solution (guarantee to always be the best answer.) I could of had used techniques like looking at total combined skilled and mixing players to try to get all combined skills acrossed pools to be more balanced. However, as per the requirements, it seems to be that a global solution along with associated complexity would not add any more value than a local one. So, this was not pursued in this iteration
 
 ============
 Questions

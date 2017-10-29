@@ -25,7 +25,12 @@ class Display:
 
     def print_fencers_to_screen(self, fencers):
         """Print list of feners to screen."""
-        print 'Competitor List'
+
+        if not fencers:
+            self.print_warning('Fencers to print to screen is empty')
+            return
+
+        print ''.join(['Competitor List', '(', str(len(fencers)), ')', ' fencers'])
 
         for fencer in fencers:
             self._print_fencer_row(fencer)
