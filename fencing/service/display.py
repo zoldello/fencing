@@ -1,4 +1,5 @@
 """Used to Display content to the screen."""
+import operator
 
 
 class Display:
@@ -26,8 +27,8 @@ class Display:
         """Print list of feners to screen."""
         print 'Competitor List'
 
-        for i in range(0, len(fencers)):
-            self._print_fencer_row(fencers[i])
+        for fencer in fencers:
+            self._print_fencer_row(fencer)
         print ''
 
     def print_pools_to_screen(self, pools):

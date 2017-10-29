@@ -49,6 +49,7 @@ class Fencer:
     @property
     def numeric_skill_level(self):
         """Numeric Skill level."""
+    
         return self._numeric_skill_level
 
     @property
@@ -80,8 +81,6 @@ class Fencer:
         # formular was choosen by arbituary, while trying to fine one
         # that satisifies the skill-formular
         best_skill_grade_offset = ord(skill_grade) - 65
-        numeric_skill_level = 1000
-        + ((10 - best_skill_grade_offset) * 1000)
-        + year
+        numeric_skill_level = 1000 + ((10 - best_skill_grade_offset) * 1000) + year
 
         return numeric_skill_level
