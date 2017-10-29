@@ -16,13 +16,13 @@ Dependencies
 Python Version
 ***************
 
-Python 2.7 is best used to run the code. You can find a video on how to install it on Linux on this video: `https://www.youtube.com/watch?v=6vpHfG8E8JI <https://www.youtube.com/watch?v=6vpHfG8E8JI>`_. The windows equivalent can be found on: `https://www.youtube.com/watch?v=yiB9mVtKMz0 <https://www.youtube.com/watch?v=yiB9mVtKMz0>`_. Nevertheless, the was also built to work on Python 3.6.3 and it works fine on it.
+Python 2.7 is best used to run the code. You can find a video on how to install it on Linux on this video: `https://www.youtube.com/watch?v=6vpHfG8E8JI <https://www.youtube.com/watch?v=6vpHfG8E8JI>`_. The windows equivalent can be found on: `https://www.youtube.com/watch?v=yiB9mVtKMz0 <https://www.youtube.com/watch?v=yiB9mVtKMz0>`_. Nevertheless, the was also built to work on Python 3.6.3.
 
 ***********************
 Operating System
 ***********************
 
-This was built using Ubuntu (Linux) and only tested on it. However, since no special library was used, in theory, it should work on Windows or Mac; and was built with that in mind.
+This was built using Ubuntu (Linux) and only tested on it. However, in theory, it should work on Windows or Mac.
 
 ============
 Usage
@@ -150,7 +150,7 @@ Further Work
 
  - My result is a local solution (a correct solution from among many) rather than a global solution (guarantee to always be the best answer.) I could of had used techniques like looking at total combined skilled and mixing players to try to get all combined skills acrossed pools to be more balanced. However, as per the requirements, it seems to be that a global solution along with associated complexity would not add any more value than a local one. So, this was not pursued in this iteration
 
-- The requirements specifically said this application must work in Python 2.7 and that was honored. However, if that requirement is lifted and I can drop support for Python 2.7, there are some optimizations I would make to make the code work better in Python 3. Like for example, I would use str.isnumeric rather than the hacky approach I used to make this work in Python 2.7 
+- The requirements specifically said this application must work in Python 2.7 and that was honored. However, if that requirement is lifted and I can drop support for Python 2.7, there are some optimizations I would make to make the code work better in Python 3. Like for example, I would use str.isnumeric rather than the hacky approach I used to make this work in Python 2.7
 
 =======================
 Questions or Comments
