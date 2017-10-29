@@ -43,8 +43,8 @@ class Display:
             fencers = sorted(pools[i].fencers, key=lambda f: f.numeric_skill_level, reverse=True)
             print ''.join(['--)------- ', pools[i].name, ' -------(--', '(', str(len(fencers)), ')'])
 
-            for j in range(0, len(fencers)):
-                self._print_fencer_row(fencers[j])
+            for fencer in fencers:
+                self._print_fencer_row(fencer)
             print ' '
 
     def _print_fencer_row(self, fencer):
