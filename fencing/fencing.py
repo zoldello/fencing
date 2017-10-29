@@ -4,7 +4,7 @@ import os
 import platform
 
 from service.display import Display
-from service.dataReader import Data_Reader
+from service.csv import Csv
 from service.pool import Pool as Pool_Service
 from model.pool import Pool as Pool_Model
 from model.fencer import Fencer
@@ -34,11 +34,11 @@ if __name__ == '__main__':
     file = args.file.strip()
     is_verbose = args.verbose
     display = Display(is_verbose)
-    data_reader = Data_Reader(file, is_verbose)
+    csv = Csv(file, is_verbose)
 
     display.print_info('File: %s. is_verbose: %s' % (args.file, args.verbose))
     display.print_info('Reading in csv')
-    raw_csv = data_reader.csv()
+    raw_csv = csv.reader()
 
     if not raw_csv:
         display.print_error('Exiting...')
