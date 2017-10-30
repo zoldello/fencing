@@ -146,11 +146,11 @@ Here are some liberties I took in detecting errors in data
 ============
 Further Work
 ============
- - I am quite busy at work and I have commitments to a side project of a friend who is starting a startup, so I had to make some sacrifices. I had to sacrifice unit test, integration test and BDD test. Despite that, I truly believe in its value. If I had the time, I would of  had used the unittest modulue (rather than the pytest in setup.py)
+ - I am quite busy at work and I have commitments to a side project of a friend who is starting a startup, so I had to make some sacrifices. I had to sacrifice unit test, integration test and BDD test. Despite that, I truly believe in its value. If I had the time, I would of  had used the unittest module (rather than the pytest in setup.py)
 
- - My result is a local solution (a correct solution from among many) rather than a global solution (guarantee to always be the best answer.) I could of had used techniques like looking at total combined skilled and mixing players to try to get all combined skills acrossed pools to be more balanced. However, as per the requirements, it seems to be that a global solution along with associated complexity would not add any more value than a local one. So, this was not pursued in this iteration
+ - My result is a local maxima-solution (a correct solution but not guaranteed to be the best) rather than a global solution (guarantee to always be the best answer.) I could of had used techniques to get the global solution all the time. However, as per the requirements, it seems to be that a global solution along with associated complexity would not add any more value than a local one. So, this was not pursued in this iteration
 
-- The requirements specifically said this application must work in Python 2.7 and that was honored. However, if that requirement is lifted and I can drop support for Python 2.7, there are some optimizations I would make to make the code work better in Python 3. Like for example, I would use str.isnumeric rather than the hacky approach I used to make this work in Python 2.7
+- The requirements specifically said this application must work in Python 2.7 and that was honored. However, if that requirement is lifted and I can drop support for Python 2.7, there are some optimizations I would make to make. For example, I would use str.isnumeric to ensure whether the year in the skill is valid, rather than the hacky approach of trying to convert it to an int and catching an exception and then knowing whether or not the year is valid (needed for Python 2.7 support).
 
 =======================
 Questions or Comments
