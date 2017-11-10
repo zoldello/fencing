@@ -1,6 +1,7 @@
 """Class for pool."""
 import operator
 import collections
+import math
 
 from service.display import Display
 from model.pool import Pool as Pool_Model
@@ -17,6 +18,7 @@ class Pool:
 
         if self._fencers:
             self._fencers_count = len(self._fencers)
+
 
     def _get_fencer_divvy_count(self):
         """Rules are that pools should consist of.
@@ -66,35 +68,35 @@ class Pool:
 
     def get_pools(self):
         """Get teams."""
-        fencers_divvy_count = self._get_fencer_divvy_count()
-        sorted_clubs = self._get_pools_sorted_by_skill()
-        max_fencers_club_count = max((len(fencers)) for club, fencers in sorted_clubs.items())
-        pool_count = self._fencers_count / fencers_divvy_count
-
-        serpentine_fencers_grouping = []
-
-        isReverse = False
-        while any(fencers != [] for fencers in sorted_clubs.values()):
-            temp_fencers = []
-            for fencers in sorted_clubs.values():
-                if not fencers:
-                    continue
-
-                temp_fencers.append(fencers.pop(0))
-
-            isReverse = not isReverse
-            serpentine_fencers_grouping.extend(sorted(temp_fencers, key=lambda f: f.numeric_skill_level, reverse=isReverse))
-
+        fencer_divvy_count = self._get_fencer_divvy_count()
+        sorted_by_skill = sorted(self._fencers, key=lambda f: (f.numeric_skill_level, f.last_name), reverse=True)
+        pool_count = math.floor(self._fencers_count / fencer_divvy_count)
         pools = []
 
-        for i in range(0, int(pool_count)):
+        for i in range(0,pool_count):
             pool_name = ''.join(['Pool #', str(i + 1)])
             pool_model = Pool_Model(pool_name)
             pools.append(pool_model)
 
-        for i in range(0, len(serpentine_fencers_grouping)):
-            index = int(i % pool_count)
+        poolIndex = 0
+        poolIndex2 = 0
 
-            pools[index].fencers.append(serpentine_fencers_grouping[i])
+        for fencer in self._fencers:
+            currentPool = pools[poolIndex]
+            poolIndex2 = poolIndex
+
+            while any(f.print_friendly_club == fencer.club for f in pools[poolIndex2].fencers):
+                poolIndex2 = poolIndex2 + 1 if poolIndex2 + 1  < pool_count else 0
+
+                if (poolIndex2 == poolIndex):
+                    break
+
+                if len(pools[poolIndex2].fencers) == fencer_divvy_count:
+                    continue
+
+            poolIndex = poolIndex2 if poolIndex == poolIndex2 else poolIndex
+
+            pools[poolIndex].fencers.append(fencer)
+            poolIndex = poolIndex + 1 if (poolIndex + 1) < pool_count else 0
 
         return pools

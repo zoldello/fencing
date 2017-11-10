@@ -65,6 +65,10 @@ if __name__ == '__main__':
             continue
 
         year = fencer_entry[3][1:]
+
+        # handles year-less skills like- U
+        year  = '0' if (year == None or year.strip() == '') else year
+
         if year:
             try:
                 int(year)
