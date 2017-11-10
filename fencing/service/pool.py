@@ -67,36 +67,51 @@ class Pool:
         return sorted_clubs
 
     def get_pools(self):
-        """Get teams."""
+        """Get pools of fencers."""
         fencer_divvy_count = self._get_fencer_divvy_count()
         sorted_by_skill = sorted(self._fencers, key=lambda f: (f.numeric_skill_level, f.last_name), reverse=True)
         pool_count = math.floor(self._fencers_count / fencer_divvy_count)
         pools = []
 
+        # create pools
         for i in range(0,pool_count):
             pool_name = ''.join(['Pool #', str(i + 1)])
             pool_model = Pool_Model(pool_name)
             pools.append(pool_model)
-
-        poolIndex = 0
-        poolIndex2 = 0
+            poolIndex = -1 # init value, lowest values afterwards is 0
 
         for fencer in self._fencers:
-            currentPool = pools[poolIndex]
-            poolIndex2 = poolIndex
+            isFencerAssigned = False
+            poolIndex = poolIndex + 1 if poolIndex + 1 < pool_count else 0
 
-            while any(f.print_friendly_club == fencer.club for f in pools[poolIndex2].fencers):
-                poolIndex2 = poolIndex2 + 1 if poolIndex2 + 1  < pool_count else 0
-
-                if (poolIndex2 == poolIndex):
+            # assigning fencer to pool while avoiding club-teammates
+            for i in range(0, pool_count):
+                if not any(f.print_friendly_club == fencer.club for f in pools[poolIndex].fencers) and len(pools[poolIndex].fencers) < fencer_divvy_count:
+                    pools[poolIndex].fencers.append(fencer)
+                    isFencerAssigned = True
                     break
+                poolIndex = poolIndex + 1 if poolIndex + 1 < pool_count else 0
 
-                if len(pools[poolIndex2].fencers) == fencer_divvy_count:
-                    continue
+            if isFencerAssigned:
+                continue
 
-            poolIndex = poolIndex2 if poolIndex == poolIndex2 else poolIndex
+            # fencer must have teammate in club, spread out the fencer-numer
+            # so clubs have fencer-count equals to fencer_divvy_count
+            for j in range(0, pool_count):
+                if len(pools[poolIndex].fencers) < fencer_divvy_count:
+                    pools[poolIndex].fencers.append(fencer)
+                    isFencerAssigned = True
+                    break;
+                poolIndex = poolIndex + 1 if poolIndex + 1 < pool_count else 0
 
-            pools[poolIndex].fencers.append(fencer)
-            poolIndex = poolIndex + 1 if (poolIndex + 1) < pool_count else 0
+            if isFencerAssigned:
+                continue
+
+            # at least one club fencer-count will be greater than fencer_divvy_count;
+            # biased so fencer appear in earlier printed clubs (why k inseatd of poolIndex used)
+            for k in range(0, pool_count):
+                if len(pools[k].fencers) < fencer_divvy_count + 1:
+                    pools[k].fencers.append(fencer)
+                    break;
 
         return pools
