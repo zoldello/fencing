@@ -19,8 +19,8 @@ class Pool:
         if self._fencers:
             self._fencers_count = len(self._fencers)
 
-
     def _get_fencer_divvy_count(self):
+
         """Rules are that pools should consist of.
         mix of 6 and 7 fencers OR
         mix of 7 and 8 fencers OR
@@ -40,33 +40,8 @@ class Pool:
 
         return 5  # default
 
-    def _divvy_fencers_by_club(self):
-        """Group fencers by club."""
-        if not self._fencers:
-            return None
-
-        clubs = collections.OrderedDict()
-
-        for fencer in self._fencers:
-            club = fencer.club
-
-            if club not in clubs:
-                clubs[club] = []
-
-            clubs[club].append(fencer)
-
-        return clubs
-
-    def _get_pools_sorted_by_skill(self):
-        clubs = self._divvy_fencers_by_club()
-        sorted_clubs = collections.OrderedDict()  # sorted by skills
-
-        for club, fencers in clubs.items():
-            sorted_clubs[club] = sorted(fencers, key=lambda f: f.numeric_skill_level, reverse=True)
-
-        return sorted_clubs
-
     def get_pools(self):
+
         """Get pools of fencers."""
         fencer_divvy_count = self._get_fencer_divvy_count()
         sorted_by_skill = sorted(self._fencers, key=lambda f: (f.numeric_skill_level, f.last_name), reverse=True)
